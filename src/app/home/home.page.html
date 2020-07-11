@@ -1,20 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card>
+    <ion-card-title>Casino Heist Randomizer</ion-card-title>
+    <ion-card-subtitle>Please select what you want to be randomized:</ion-card-subtitle>
+    <ion-checkbox id="boxApp"></ion-checkbox><ion-label>Approach</ion-label><br>
+    <ion-checkbox></ion-checkbox><ion-label>Crew</ion-label><br>
+    <ion-checkbox></ion-checkbox><ion-label>Preps</ion-label><br>
+    <ion-button (click)="onClick()"  fill="clear" shape="round">Randomize!</ion-button><br>
+    <ion-label id="lblApproach"></ion-label><br>
+    <ion-label id="lblHacker"></ion-label><br>
+  </ion-card>
+
 </ion-content>
