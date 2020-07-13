@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { concat } from 'rxjs';
 
 
 //Available hackers for the heist
@@ -6,7 +7,8 @@ const hackers = [
   "Avi Schwartzman",
   "Paige Harris",
   "Christian Feltz",
-  "Rickie Luckens"
+  "Rickie Luckens",
+  "Yohan Blair"
 ]
 
 //The main approaches
@@ -47,6 +49,22 @@ const aggPreps = [
   "Boring Machine"     //Is that its name?
 ]
 
+const gunmen = [
+  "Chester McCoy",
+  "Gustavo Mota",
+  "Patrick McReary",
+  "Charlie Reed",
+  "Karl Abolaji"
+]
+
+const drivers = [
+  "Chester McCoy",
+  "Eddie Toh",
+  "Taliana Martínez",
+  "Zach Nelson",
+  "Karim Denz"
+]
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -57,24 +75,73 @@ export class HomePage {
   constructor() {}
 
   onClick = () => {
+    let defPreps;
     if(document.getElementById("boxApp").checked){
-      const approach = this.elegirRandom(approaches);
-      this.cambiarTxtLabel("lblApproach", "Approach: " + approach);
+      document.getElementById("approach").hidden = false;
+      let approach = this.chooseRandom(approaches);
+      switch (approach){
+        case "The Big Con":
+          approach = approach + " with  the " + this.chooseRandom(conDisguises) + " disguise"
+          defPreps = concat(defaultPreps,conPreps);
+          break;
+        case "Silent & Sneaky":
+          defPreps = concat(defaultPreps,ssPreps);
+          break;
+        case "Aggressive":
+          defPreps = concat(defaultPreps,aggPreps);
+          break
+      }
+      this.changeLabelTxt("lblApproach", "Approach: " + approach);
     }
     else{
-      document.getElementById("lblApproach").hidden = true;
+      document.getElementById("approach").hidden = true;
     }
-    const hacker = this.elegirRandom(hackers);
-    this.cambiarTxtLabel("lblHacker", ("Hacker: " + hacker));  
+    if(document.getElementById("boxCrew").checked){
+      document.getElementById("crew").hidden = false;
+      const hacker = this.chooseRandom(hackers);
+      this.changeLabelTxt("lblHacker", ("Hacker: " + hacker));  
+      const driver = this.chooseRandom(drivers);
+      this.changeLabelTxt("lblDriver", "Driver: " + driver);
+      const gunman = this.chooseRandom(gunmen);
+      this.changeLabelTxt("lblGun", "Gunman: " + gunman);
+    }
+    else{
+      document.getElementById("crew").hidden = true;
+    }
+    if(document.getElementById("boxPreps").checked){
+      if(!defPreps){
+        defPreps = defaultPreps;
+      }
+      let num = Math.floor(Math.random() * defPreps.length);
+      let chosen = [];
+      for(let i=0;i<num;i++){
+        let gotOne = false;
+        while(!gotOne){
+          let element = this.chooseRandom(defPreps);
+          if(!chosen.includes(element)){
+            chosen.push(element);
+            gotOne = true;
+          }
+        }
+      }
+      let preps = chosen.toString();
+      preps.replace(",", "\n");
+      document.getElementById("lblPreps").hidden = false;
+      this.changeLabelTxt("lblPreps", preps);
+      console.log("AAAAAAAAAAAAAAAAAAAA")
+    }
+    else{
+      document.getElementById("lblPreps").hidden = true;
+    }
   }
 
-  cambiarTxtLabel = (id, txt) => {
+  changeLabelTxt = (id, txt) => {
     const lblrndm = document.getElementById(id);
     lblrndm.innerHTML = txt;
     lblrndm.hidden = false;
   }
 
-  elegirRandom = arr => {
+  chooseRandom = arr => {
     let num = Math.floor(Math.random() * arr.length);
     return arr[num];
   }

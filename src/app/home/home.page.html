@@ -4,11 +4,20 @@
     <ion-card-title>Casino Heist Randomizer</ion-card-title>
     <ion-card-subtitle>Please select what you want to be randomized:</ion-card-subtitle>
     <ion-checkbox id="boxApp"></ion-checkbox><ion-label>Approach</ion-label><br>
-    <ion-checkbox></ion-checkbox><ion-label>Crew</ion-label><br>
-    <ion-checkbox></ion-checkbox><ion-label>Preps</ion-label><br>
+    <ion-checkbox id="boxCrew"></ion-checkbox><ion-label>Crew</ion-label><br>
+    <ion-checkbox id="boxPreps"></ion-checkbox><ion-label>Preps</ion-label><br>
     <ion-button (click)="onClick()"  fill="clear" shape="round">Randomize!</ion-button><br>
-    <ion-label id="lblApproach"></ion-label><br>
-    <ion-label id="lblHacker"></ion-label><br>
+    <div id="approach" hidden=true>
+      <ion-label id="lblApproach"></ion-label><br>
+    </div>
+    <div id="crew" hidden = true>
+      <ion-label id="lblHacker"></ion-label><br>
+      <ion-label id="lblGun"></ion-label><br>
+      <ion-label id="lblDriver"></ion-label><br>
+    </div>
+    <div id="preps" hidden=true>
+      <i-label id="lblPreps"></i-label>
+    </div>
   </ion-card>
 
 </ion-content>
