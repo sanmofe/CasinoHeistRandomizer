@@ -88,15 +88,12 @@ export class HomePage {
         case "The Big Con":
           approach = approach + " with  the " + this.chooseRandom(conDisguises) + " disguise"
           defPreps = defaultPreps.concat(conPreps);
-          console.log(defPreps);
           break;
         case "Silent & Sneaky":
           defPreps = defaultPreps.concat(ssPreps);
-          console.log(defPreps);
           break;
         case "Aggressive":
           defPreps = defaultPreps.concat(aggPreps);
-          console.log(defPreps);
           break
       }
       this.changeLabelTxt("lblApproach", "Approach: " + approach);
@@ -129,20 +126,22 @@ export class HomePage {
           while(!gotOne){
             let element = this.chooseRandom(defPreps);
             if(!chosen.includes(element)){
-              if(element == "Exit Disguise"){
-                element = element + " (" + this.chooseRandom(eDisguises) + ")"
-              }
               chosen.push(element);
               gotOne = true;
             }
           }
+        }
+        if(chosen.includes("Exit Disguise")){
+          const num = chosen.findIndex(prep => {
+            return prep == "Exit Disguise";
+          });
+          chosen[num] = chosen[num] + " ("+this.chooseRandom(eDisguises)+")";
         }
         preps = "Preps: \n" + chosen.toString();
         preps = preps.split(",").join("\n"); 
       }
       document.getElementById("preps").hidden = false;
       this.changeLabelTxt("txtPreps", preps);
-      console.log("AAAAAAAAAAAAAAAAAAAA")
     }
     else{
       document.getElementById("preps").hidden = true;
