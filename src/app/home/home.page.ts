@@ -46,7 +46,7 @@ const conPreps = [
 
 const aggPreps = [
   "Reinforced Armor",
-  "Boring Machine"     //Is that its name?
+  "Tunnel Boring Machine"
 ]
 
 const gunmen = [
@@ -65,6 +65,11 @@ const drivers = [
   "Karim Denz"
 ]
 
+const eDisguises = [
+  "Firefighter Gear",
+  "NOOSE Gear",
+  "High Roller"
+]
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -82,13 +87,16 @@ export class HomePage {
       switch (approach){
         case "The Big Con":
           approach = approach + " with  the " + this.chooseRandom(conDisguises) + " disguise"
-          defPreps = concat(defaultPreps,conPreps);
+          defPreps = defaultPreps.concat(conPreps);
+          console.log(defPreps);
           break;
         case "Silent & Sneaky":
-          defPreps = concat(defaultPreps,ssPreps);
+          defPreps = defaultPreps.concat(ssPreps);
+          console.log(defPreps);
           break;
         case "Aggressive":
-          defPreps = concat(defaultPreps,aggPreps);
+          defPreps = defaultPreps.concat(aggPreps);
+          console.log(defPreps);
           break
       }
       this.changeLabelTxt("lblApproach", "Approach: " + approach);
@@ -113,25 +121,31 @@ export class HomePage {
         defPreps = defaultPreps;
       }
       let num = Math.floor(Math.random() * defPreps.length);
-      let chosen = [];
-      for(let i=0;i<num;i++){
-        let gotOne = false;
-        while(!gotOne){
-          let element = this.chooseRandom(defPreps);
-          if(!chosen.includes(element)){
-            chosen.push(element);
-            gotOne = true;
+      let preps = "No preps";
+      if(num){ 
+        let chosen = [];
+        for(let i=0;i<num;i++){
+          let gotOne = false;
+          while(!gotOne){
+            let element = this.chooseRandom(defPreps);
+            if(!chosen.includes(element)){
+              if(element == "Exit Disguise"){
+                element = element + " (" + this.chooseRandom(eDisguises) + ")"
+              }
+              chosen.push(element);
+              gotOne = true;
+            }
           }
         }
+        preps = "Preps: \n" + chosen.toString();
+        preps = preps.split(",").join("\n"); 
       }
-      let preps = chosen.toString();
-      preps.replace(",", "\n");
-      document.getElementById("lblPreps").hidden = false;
-      this.changeLabelTxt("lblPreps", preps);
+      document.getElementById("preps").hidden = false;
+      this.changeLabelTxt("txtPreps", preps);
       console.log("AAAAAAAAAAAAAAAAAAAA")
     }
     else{
-      document.getElementById("lblPreps").hidden = true;
+      document.getElementById("preps").hidden = true;
     }
   }
 
